@@ -34,10 +34,10 @@ targetDOMAIN=${targetDOMAIN=academy.htb}
 
 #Print Target info back to user    
 PrintTargetInfo () {
-    printf "Target IP: $targetIP"
-    printf "Target Port: $targetPORT"
-    printf "Target Socket: $targetSOCK"
-    printf "Target Domain: $targetDOMAIN"
+    printf "Target IP: $targetIP\n"
+    printf "Target Port: $targetPORT\n"
+    printf "Target Socket: $targetSOCK\n"
+    printf "Target Domain: $targetDOMAIN\n"
 }
 
 #Generate Target Info Text
