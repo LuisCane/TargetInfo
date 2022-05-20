@@ -24,47 +24,55 @@ This script contains functions that require root privilages and is intended to r
 
 #get target info from the user
 GetTargetInfo () {
-read -p "Enter Target IP and Port in format x.x.x.x:yyyy [127.0.0.1:80]: " targetSOCK;
+printf "\nEnter Target IP and Port in format x.x.x.x:yyyy.\n"
+read -p "[Eg. 127.0.0.1:80]: " targetSOCK;
 targetSOCK=${targetSOCK=127.0.0.1:80}
 targetIP=$(echo $targetSOCK | cut -d : -f 1)
 targetPORT=$(echo $targetSOCK | cut -d : -f 2)
-read -p "Enter desired Domain for /etc/hosts/ [academy.htb]:" targetDOMAIN;
+printf "\nEnter desired Domain and Subdomains separated by spaces for /etc/hosts/.\n" 
+read -p "[Eg. academy.htb test.academy.htb]:" targetDOMAIN;
 targetDOMAIN=${targetDOMAIN=academy.htb}
 }
 
 #Print Target info back to user    
 PrintTargetInfo () {
-    printf "Target IP: $targetIP"
-    printf "Target Port: $targetPORT"
-    printf "Target Socket: $targetSOCK"
-    printf "Target Domain: $targetDOMAIN"
+    printf "\nTarget IP: $targetIP"
+    printf "\nTarget Port: $targetPORT"
+    printf "\nTarget Socket: $targetSOCK"
+    printf "\nTarget Domain: $targetDOMAIN\n\n"
+    sleep 1s
 }
 
 #Generate Target Info Text
 CreateTargetTxt () {
     printf "Generating ~/HTB/Target.txt"
-    mkdir ~/HTB/;
+    mkdir -p ~/HTB/;
     echo "Target Socket: $targetSOCK
     Target IP: $targetIP
     Target PORT: $targetPORT
-    Target Domain: $targetDOMAIN:$targetPORT" > Target.txt;
+    Target Domain: $targetDOMAIN:$targetPORT" > ~/HTB/Target.txt;
+    sleep 1s
 }
 #Backup Hosts File
 BackupHosts () {
+    printf "\nBacking up /etc/hosts\n"
+    sleep 1s
     FILE=/etc/hosts.bak
     if test -f "$FILE"; then
-    printf "/etc/hosts.bak already exists\n"
+    printf "\netc/hosts.bak already exists\n"
+    sleep 1s
     else sudo cp /etc/hosts /etc/hosts.bak;
-    printf "Backing up /etc/hosts\n"
+    printf "/etc/hosts is backed up.\n"
+    sleep 1s
     fi
 }
 
 #Modify Hosts File
 ModifyHosts () {
-    BackupHosts
     sudo cp /etc/hosts.bak /etc/hosts;
     sudo sed -i "$ a $targetIP $targetDOMAIN" /etc/hosts;
-    printf "New /etc/hosts, manualy edit this file to add subdomains"
+    printf "\nNew /etc/hosts, manualy edit this file to add subdomains\n"
+    sleep 1s
     cat /etc/hosts;
 }
 
